@@ -4,27 +4,61 @@ let tabsBarUlChilds = Array.from(tabsBarUl.children);
 
 let currentActiveTab = undefined;
 
-tabsBarUlChilds.forEach(element => {
+let currentTabIndex;
+
+
+function changeCurrentTab(e, element, afterRemoving) {
+    try {
+
+        if (afterRemoving == false) {
+
+            if (e.target.nodeName != 'IMG') {
+
+                if (currentActiveTab == undefined) {
+
+                    element.style.cssText = 'background-color:#282828;';
+
+                    currentActiveTab = element;
+
+
+                }
+                else {
+
+                    currentActiveTab.style.cssText = 'background-color:#171717;';
+
+                    element.style.cssText = 'background-color:#282828';
+
+                    currentActiveTab = element;
+
+                }
+
+                currentTabIndex = tabsBarUlChilds.indexOf(element);
+            }
+        }
+
+        else if (afterRemoving == true) {
+
+            currentActiveTab.style.cssText = 'background-color:#171717;';
+
+            element.style.cssText = 'background-color:#282828';
+
+            currentActiveTab = element;
+
+            currentTabIndex = tabsBarUlChilds.indexOf(element);
+
+        }
+    }
+    catch (error) {
+        console.log('All Tabs Are closed.');
+    }
+}
+
+
+tabsBarUlChilds.forEach((element, index) => {
 
     element.addEventListener('click', (e) => {
 
-        if (e.target.nodeName != 'IMG') {
-
-            if (currentActiveTab == undefined) {
-
-                element.style.cssText = 'background-color:#282828;';
-
-                currentActiveTab = element;
-            }
-            else {
-
-                currentActiveTab.style.cssText = 'background-color:#171717;';
-
-                element.style.cssText = 'background-color:#282828';
-
-                currentActiveTab = element;
-            }
-        }
+        changeCurrentTab(e, element, false);
     });
 
     element.firstElementChild.addEventListener('mouseover', () => {
@@ -40,19 +74,23 @@ tabsBarUlChilds.forEach(element => {
     });
 
     element.firstElementChild.addEventListener('click', () => {
+        
+        let removedElement = element;
+
 
         tabsBarUl.removeChild(element);
+        tabsBarUlChilds = Array.from(tabsBarUl.children);
+
+
+        if (removedElement == currentActiveTab) {
+            if (currentTabIndex < tabsBarUlChilds.length) {
+
+                changeCurrentTab(null, tabsBarUlChilds[currentTabIndex], true);
+            }
+            else if (currentTabIndex > tabsBarUlChilds.length - 1) {
+                changeCurrentTab(null, tabsBarUlChilds[tabsBarUlChilds.length - 1], true);
+            }
+        }
+
     });
 });
-
-
-// let menuBar = document.getElementById('menuBar');
-// let menuBarUl = menuBar.firstElementChild;
-// let menuBarUlChilds = Array.from(menuBarUl.children);
-
-/* 
-
-    [0] [1] [2] [3] [4]
-    
-
-*/ 
