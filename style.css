@@ -1,0 +1,72 @@
+*{
+    margin: 0%;
+    padding: 0%;
+}
+
+
+#menuBar li{
+    background-color: #111111;
+    font-size: 18px;
+    padding: 15px;
+    margin-left: 10px;
+    user-select: none;
+}
+
+#menuBar li:active{
+    background-color: #D6CD00;
+    color: black;
+}
+
+#tabsBar{
+    width: 100%;
+}
+
+
+#tabsBar li{
+    user-select: none;
+    padding: 15px;
+    font-size: 16px;
+    /* min-width: 35px; */
+    /* max-width: 35px; */
+    /* overflow: hidden; */
+    position: relative;
+}
+
+
+.crossIcon{
+    background-color: #282828;
+    position: absolute;
+    top: 0.0rem;
+    right: 0.0rem;
+    width: 16px;
+}
+
+
+.crossIconOnHover{
+    background-color: red;
+    position: absolute;
+    top: 0.0rem;
+    right: 0.0rem;
+    width: 16px;
+}
+
+.crossIconOnTouch{
+    background-color: #D6CD00;
+    position: absolute;
+    top: 0.0rem;
+    right: 0.0rem;
+    width: 16px;
+}
+
+#Notes{
+    width: 100vw;
+    height: 100vh;
+    background-color: #282828;
+}
+
+
+@media only screen and (max-width:323px){
+    header h2{
+        font-size: 30px;
+    }
+}

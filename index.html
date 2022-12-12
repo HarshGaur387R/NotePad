@@ -5,10 +5,40 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NotePad</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="util.css">
+
 </head>
 <body>
-    <div id="container">
+    <div id="container" class="ta-center">
+        <header class="bgColor-171717 color-D6CD00 font-inter" style="font-size: 24px; padding: 5px;"><h2>ONLINE NOTEPAD</h2></header>
 
+        <div id="menuBar">
+            <ul class="lst-none flex bgColor-0E0E0E color-white font-inter f-flow-wrap">
+                <li>New</li>
+                <li>Open</li>
+                <li>Save</li>
+                <li>Save as</li>
+                <li>Delete</li>
+                <li>Sticky</li>
+            </ul>
+        </div>
+
+        <div id="tabsBar" class="bgColor-171717 overflow-auto">
+            
+            <ul id="tabsBarUl" class="flex color-D6CD00 font-inter lst-none" >
+                <li>NOTE0dd<img class="crossIcon" src="/NotePad/img/bCross.png" alt="x"></li>
+                <li>NOTE1dd<img class="crossIcon" src="/NotePad/img/bCross.png" alt="x"></li>
+                <li>NOTE2dd<img class="crossIcon" src="/NotePad/img/bCross.png" alt="x"></li>
+                <li>NOTE3dd<img class="crossIcon" src="/NotePad/img/bCross.png" alt="x"></li>
+                <li>NOTE4dd<img class="crossIcon" src="/NotePad/img/bCross.png" alt="x"></li>
+                <li>NOTE5dd<img class="crossIcon" src="/NotePad/img/bCross.png" alt="x"></li>
+            </ul>
+        </div>
+
+        <div id="Notes"></div> 
     </div>
+
+    <script src="script.js"></script>
 </body>
 </html>

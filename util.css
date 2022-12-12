@@ -1,6 +1,6 @@
-.flex {
-    display: flex;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap');
+
+/* =================== JUSTIFY CONTENT ================ */
 
 .jc-center {
     justify-content: center;
@@ -14,20 +14,39 @@
     justify-content: space-between;
 }
 
+
+/* ===================== MARGIN ======================== */
+
 .margin-auto {
     margin: auto;
 }
+
+
+/* ===================== TEXT ALIGN ====================*/
 
 .ta-center {
     text-align: center;
 }
 
+
+/* ====================== ALIGN ITEM ==================== */
+
 .ai-center {
     align-items: center;
 }
 
+
+/* ======================= LIST ========================= */
+
 .lst-none {
     list-style-type: none;
+}
+
+
+/* ==================== FLEX ELEMENT ===================== */
+
+.flex {
+    display: flex;
 }
 
 .f-flow-row-wrap {
@@ -56,4 +75,90 @@
 
 .f-direction-column{
     flex-direction: column;
+}
+
+/* =================== BG-COLOR =================== */
+
+.bgColor-171717{
+    background-color: #171717;
+}
+
+.bgColor-282828{
+    background-color: #282828;
+}
+
+.bgColor-0E0E0E{
+    background-color: #0E0E0E;
+}
+
+
+/* ==================== COLOR ===================== */
+
+.color-D6CD00{
+    color: #D6CD00;
+}
+
+
+/* ==================== FONTS ===================== */
+
+.font-inter{
+    font-family: 'inter';
+}
+
+.font-weight-bold{
+    font-weight:bold;
+}
+
+.font-weight-bolder{
+    font-weight: bolder;
+}
+
+.font-weight-lighter{
+    font-weight: lighter;
+}
+
+.font-weight-100{
+    font-weight: 100;
+}
+
+.font-weight-200{
+    font-weight: 200;
+}
+
+.font-weight-300{
+    font-weight: 300;
+}
+
+.font-weight-400{
+    font-weight:400;
+}
+
+.font-weight-500{
+    font-weight: 500;
+}
+
+.font-weight-600{
+    font-weight: 600;
+}
+
+.font-weight-700{
+    font-weight: 700;
+}
+
+.font-weight-800{
+    font-weight: 800;
+}
+
+.font-weight-900{
+    font-weight: 900;
+}
+
+.color-white{
+    color: white;
+}
+
+/* OVERFLOW */
+
+.overflow-auto{
+    overflow: auto;
 }
