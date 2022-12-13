@@ -64,6 +64,32 @@
     background-color: #282828;
 }
 
+/* #Notes > :not(:nth-child(2)){
+    width: 100%;
+    height: 100%;
+    top: 10px;
+    position: absolute;
+    z-index: -1;
+    color: #D6CD00;
+} */
+
+.activeNote{
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+    color: #D6CD00;
+}
+
+.unActiveNote{
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: -1;
+    color: #D6CD00;
+}
 
 @media only screen and (max-width:323px){
     header h2{
