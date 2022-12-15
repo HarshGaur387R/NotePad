@@ -168,7 +168,7 @@ tabsBarUlChilds.forEach((element, index) => {
     });
 });
 
-function createNewTab() {
+function createNewTabAndNote() {
 
     let nameAskingWindow = document.getElementById('nameAskingWindow');
     nameAskingWindow.style.display = "block";
@@ -256,16 +256,16 @@ function createNewTab() {
 
 }
 
-function createNewNote(element) {
+
+function OpenNote() { // CHECKPOINT
 
 }
 
-function OpenNote(name) {
+function saveNote() {
 
-}
-
-function saveNote(activeNote) {
-
+    if (currentActiveNote != undefined) {
+        localStorage.setItem(currentActiveNote.id,currentActiveNote.innerHTML);
+    }
 }
 
 function saveAs(activeNote, id) {
@@ -281,4 +281,5 @@ function stckey() { // Stickey open the tab and note in new window.
 }
 
 
-menuBarItems[0].addEventListener('click', createNewTab);
+menuBarItems[0].addEventListener('click', createNewTabAndNote);
+menuBarItems[2].addEventListener('click',saveNote);
