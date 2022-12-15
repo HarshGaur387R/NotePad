@@ -1,7 +1,10 @@
+let menuBarItems = Array.from(document.getElementById('menuBar').firstElementChild.children);
+
+
 let NotesContainer = document.getElementById('Notes');
 
 let NotesChilds = Array.from(NotesContainer.children);
-
+ 
 let currentActiveNote = undefined;
 
 
@@ -165,30 +168,117 @@ tabsBarUlChilds.forEach((element, index) => {
     });
 });
 
-function createNewTab(name) {
+function createNewTab() {
+
+    let nameAskingWindow = document.getElementById('nameAskingWindow');
+    nameAskingWindow.style.display = "block";
+    let nameButton = document.getElementById('nameButton');
+
+    nameButton.onclick = () => {
+        let val = document.getElementById('nameInput').value;
+        document.getElementById("nameInput").value = "";
+        nameAskingWindow.style.display = "none";
+
+        // Creating Tab
+
+        let img = document.createElement('img');
+        img.src = "/NotePad/img/bCross.png";
+        img.className = "crossIcon";
+        img.alt = "x";
+
+        let li = document.createElement('li');
+        li.innerHTML = val;
+        li.appendChild(img);
+
+        tabsBarUl.appendChild(li);
+        tabsBarUlChilds = Array.from(tabsBarUl.children);
+
+        li.addEventListener('click', (e) => {
+
+            changeCurrentTab(e, li, false);
+            changeNotes(e, li, false);
+        });
+
+        li.firstElementChild.addEventListener('mouseover', () => {
+            li.firstElementChild.className = 'crossIconOnHover'
+        });
     
+        li.firstElementChild.addEventListener('mouseout', () => {
+            li.firstElementChild.className = 'crossIcon'
+        });
+    
+        li.firstElementChild.addEventListener('touchstart', () => {
+            li.firstElementChild.className = 'crossIconOnTouch'
+        });
+
+        li.firstElementChild.addEventListener('click', (e) => {
+
+            let removedElement = li;
+
+
+            tabsBarUl.removeChild(li);
+            removeNote(removedElement);
+            tabsBarUlChilds = Array.from(tabsBarUl.children);
+
+
+            if (removedElement == currentActiveTab) {
+                if (currentTabIndex < tabsBarUlChilds.length) {
+
+                    changeCurrentTab(null, tabsBarUlChilds[currentTabIndex], true);
+                    changeNotes(e, currentActiveTab, true);
+                }
+                else if (currentTabIndex > tabsBarUlChilds.length - 1) {
+                    changeCurrentTab(null, tabsBarUlChilds[tabsBarUlChilds.length - 1], true);
+                    changeNotes(e, currentActiveTab, true);
+                }
+            }
+
+        });
+
+        let fakeEvent = { target: { nodeName: "Not_Image" } }
+        changeCurrentTab(fakeEvent, li, false);
+
+        // Creating new notes tab.
+
+        let div = document.createElement('div');
+        div.id = val;
+        div.innerHTML = val; // ******* WILL REMOVE IT IN FUTURE.
+        div.className = "unActiveNote";
+
+        document.getElementById('Notes').appendChild(div);
+        NotesChilds = Array.from(NotesContainer.children);
+
+        changeNotes(fakeEvent,div,false);
+
+
+
+    }
+
 }
 
-function createNewNote(element){
+function createNewNote(element) {
 
 }
 
-function OpenNote(name){
+function OpenNote(name) {
 
 }
 
-function saveNote(activeNote){
+function saveNote(activeNote) {
 
 }
 
-function saveAs(activeNote,id){
+function saveAs(activeNote, id) {
 
 }
 
-function deleteNode(){ // Delete's active note and tab.
+function deleteNode() { // Delete's active note and tab.
 
 }
 
-function stckey(){ // Stickey open the tab and note in new window.
+function stckey() { // Stickey open the tab and note in new window.
 
 }
+
+
+menuBarItems[0].addEventListener('click', createNewTab);

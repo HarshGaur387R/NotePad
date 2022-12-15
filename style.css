@@ -1,10 +1,10 @@
-*{
+* {
     margin: 0%;
     padding: 0%;
 }
 
 
-#menuBar li{
+#menuBar li {
     background-color: #111111;
     font-size: 18px;
     padding: 15px;
@@ -12,17 +12,17 @@
     user-select: none;
 }
 
-#menuBar li:active{
+#menuBar li:active {
     background-color: #D6CD00;
     color: black;
 }
 
-#tabsBar{
+#tabsBar {
     width: 100%;
 }
 
 
-#tabsBar li{
+#tabsBar li {
     user-select: none;
     padding: 15px;
     font-size: 16px;
@@ -33,7 +33,7 @@
 }
 
 
-.crossIcon{
+.crossIcon {
     background-color: #282828;
     position: absolute;
     top: 0.0rem;
@@ -42,7 +42,7 @@
 }
 
 
-.crossIconOnHover{
+.crossIconOnHover {
     background-color: red;
     position: absolute;
     top: 0.0rem;
@@ -50,7 +50,7 @@
     width: 16px;
 }
 
-.crossIconOnTouch{
+.crossIconOnTouch {
     background-color: #D6CD00;
     position: absolute;
     top: 0.0rem;
@@ -58,22 +58,71 @@
     width: 16px;
 }
 
-#Notes{
+#Notes {
     width: 100vw;
     height: 100vh;
     background-color: #282828;
 }
 
-/* #Notes > :not(:nth-child(2)){
-    width: 100%;
-    height: 100%;
-    top: 10px;
-    position: absolute;
-    z-index: -1;
-    color: #D6CD00;
-} */
 
-.activeNote{
+#nameAskingWindow {
+    display: none;
+    font-family: 'inter';
+    background-color: #111111;
+    width: 30vw;
+    min-width: 300px;
+    height: 200px;
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-top: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#nameAskingWindow label {
+    color: #D6CD00;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+#nameAskingWindow input {
+    text-align: center;
+    background-color: transparent;
+    border: 2px solid #D6CD00;
+    color: white;
+    font-size: 18px;
+}
+
+#nameAskingWindow input:focus {
+    -webkit-outline: 1px solid white;
+    -moz-outline: 1px solid white;
+    outline: 1px solid white;
+}
+
+#nameAskingWindow button {
+    font-family: 'inter';
+    padding: 10px;
+    font-size: 18px;
+    background-color: #D6CD00;
+    border: 2px solid #D6CD00;
+    color: black;
+}
+
+#nameAskingWindow button:active {
+    background-color: transparent;
+    border: 2px solid #D6CD00;
+    color: #D6CD00;
+}
+
+.activeNote {
     display: block;
     width: 100%;
     height: 100%;
@@ -82,7 +131,7 @@
     color: #D6CD00;
 }
 
-.unActiveNote{
+.unActiveNote {
     display: none;
     width: 100%;
     height: 100%;
@@ -91,8 +140,9 @@
     color: #D6CD00;
 }
 
-@media only screen and (max-width:323px){
-    header h2{
+
+@media only screen and (max-width:323px) {
+    header h2 {
         font-size: 30px;
     }
 }
