@@ -4,7 +4,7 @@ let menuBarItems = Array.from(document.getElementById('menuBar').firstElementChi
 let NotesContainer = document.getElementById('Notes');
 
 let NotesChilds = Array.from(NotesContainer.children);
- 
+
 let currentActiveNote = undefined;
 
 
@@ -202,11 +202,11 @@ function createNewTabAndNote() {
         li.firstElementChild.addEventListener('mouseover', () => {
             li.firstElementChild.className = 'crossIconOnHover'
         });
-    
+
         li.firstElementChild.addEventListener('mouseout', () => {
             li.firstElementChild.className = 'crossIcon'
         });
-    
+
         li.firstElementChild.addEventListener('touchstart', () => {
             li.firstElementChild.className = 'crossIconOnTouch'
         });
@@ -248,9 +248,7 @@ function createNewTabAndNote() {
         document.getElementById('Notes').appendChild(div);
         NotesChilds = Array.from(NotesContainer.children);
 
-        changeNotes(fakeEvent,div,false);
-
-
+        changeNotes(fakeEvent, div, false);
 
     }
 
@@ -258,13 +256,18 @@ function createNewTabAndNote() {
 
 
 function OpenNote() { // CHECKPOINT
+    let length = localStorage.length;
+    document.getElementById('fileListWindow').style.display = 'block';
+
+
 
 }
 
 function saveNote() {
 
     if (currentActiveNote != undefined) {
-        localStorage.setItem(currentActiveNote.id,currentActiveNote.innerHTML);
+        localStorage.setItem(currentActiveNote.id, currentActiveNote.innerHTML);
+
     }
 }
 
@@ -282,4 +285,5 @@ function stckey() { // Stickey open the tab and note in new window.
 
 
 menuBarItems[0].addEventListener('click', createNewTabAndNote);
-menuBarItems[2].addEventListener('click',saveNote);
+menuBarItems[1].addEventListener('click', OpenNote);
+menuBarItems[2].addEventListener('click', saveNote);

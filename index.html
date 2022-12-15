@@ -40,17 +40,28 @@
         </div>
 
         <div id="nameAskingWindow">
-            <label for="nameInput">Enter Note Name</label>
+            <label class="HG-label-box" for="nameInput">Enter Note Name</label>
             <br>
             <br>
-            <input type="text" name="nameInput" id="nameInput">
+            <input class="HG-input-box" type="text" name="nameInput" id="nameInput">
             <br>
             <br>
-            <button id="nameButton">Create</button>
+            <button class="HG-button" id="nameButton">Create</button>
         </div>
 
         <div id="fileListWindow">
-            
+            <label class="HG-label-box" for="filesInput">Search Note</label>
+            <br>
+            <br>
+            <input class="HG-input-box" list="savedNotes" id="filesInput" name="filesInput">
+
+            <datalist id="savedNotes">
+
+            </datalist>
+
+            <br>
+            <br>
+            <button class="HG-button" id="filesButton">Open</button>
         </div>
 
     </div>

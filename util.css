@@ -14,6 +14,41 @@
     justify-content: space-between;
 }
 
+.jc-baseline{
+    justify-content: baseline;
+}
+
+.jc-end{
+    justify-content: end;
+}
+
+.jc-first-baseline{
+    justify-content: first baseline;
+}
+
+.jc-flex-end{
+    justify-content: flex-end;
+}
+
+.jc-flex-start{
+    justify-content:flex-start;
+}
+
+.jc-last-baseline{
+    justify-content: last baseline;
+}
+
+.jc-left{
+    justify-content: left;
+}
+
+.jc-right{
+    justify-content: right;
+}
+
+.jc-safe{
+    justify-content: safe;
+}
 
 /* ===================== MARGIN ======================== */
 
@@ -28,7 +63,37 @@
     text-align: center;
 }
 
+.ta-end{
+    text-align: end;
+}
 
+.ta-justify{
+    text-align: justify;
+}
+
+.ta-left{
+    text-align: left;
+}
+
+.ta-right{
+    text-align: right;
+}
+
+.ta-start{
+    text-align: start;
+}
+
+.ta-inherit{
+    text-align: inherit;
+}
+
+.ta-initial{
+    text-align: initial;
+}
+
+.ta-unset{
+    text-align: unset;
+}
 /* ====================== ALIGN ITEM ==================== */
 
 .ai-center {

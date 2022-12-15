@@ -87,13 +87,14 @@
     padding-right: 20px;
 }
 
-#nameAskingWindow label {
+
+.HG-label-box{
     color: #D6CD00;
     font-size: 30px;
     font-weight: 700;
 }
 
-#nameAskingWindow input {
+.HG-input-box{
     text-align: center;
     background-color: transparent;
     border: 2px solid #D6CD00;
@@ -101,13 +102,13 @@
     font-size: 18px;
 }
 
-#nameAskingWindow input:focus {
+.HG-input-box:focus{
     -webkit-outline: 1px solid white;
     -moz-outline: 1px solid white;
     outline: 1px solid white;
 }
 
-#nameAskingWindow button {
+.HG-button{
     font-family: 'inter';
     padding: 10px;
     font-size: 18px;
@@ -116,11 +117,34 @@
     color: black;
 }
 
-#nameAskingWindow button:active {
+.HG-button:active{
     background-color: transparent;
     border: 2px solid #D6CD00;
     color: #D6CD00;
 }
+
+#fileListWindow{
+    display: none;
+    font-family: 'inter';
+    background-color: #111111;
+    width: 30vw;
+    min-width: 300px;
+    height: 200px;
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-top: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
 
 .activeNote {
     display: block;
