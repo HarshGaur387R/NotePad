@@ -53,12 +53,11 @@ function changeNotes(e, element, afterRemoving) {
 
         if (afterRemoving == false) {
             if (e.target.nodeName != 'IMG') {    // Find other logic for this shit.  .
-
                 if (currentActiveNote == undefined) {
                     currentActiveNote = pair[sID];
                     currentActiveNote.className = 'activeNote';
                 }
-                else {
+                else if(currentActiveNote != undefined){
                     currentActiveNote.className = 'unActiveNote';
                     currentActiveNote = pair[sID];
                     currentActiveNote.className = 'activeNote';
@@ -104,7 +103,7 @@ function changeCurrentTab(e, element, afterRemoving) {
 
 
                 }
-                else {
+                else if(currentActiveTab != undefined){
 
                     currentActiveTab.style.cssText = 'background-color:#171717;';
 
@@ -193,9 +192,6 @@ function createTabSolo(name) {
     li.innerHTML = name;
     li.appendChild(img);
 
-    tabsBarUl.appendChild(li);
-    tabsBarUlChilds = Array.from(tabsBarUl.children);
-
     li.addEventListener('click', (e) => {
 
         changeCurrentTab(e, li, false);
@@ -237,6 +233,8 @@ function createTabSolo(name) {
         }
 
     });
+
+    return li;
 }
 
 function createNoteSolo(id) {
@@ -245,9 +243,20 @@ function createNoteSolo(id) {
     div.innerHTML = id; // ******* WILL REMOVE IT IN FUTURE.
     div.className = "unActiveNote";
 
+    return div;
+
+}
+
+
+function appendTab(li) {
+    tabsBarUl.appendChild(li);
+    tabsBarUlChilds = Array.from(tabsBarUl.children);
+}
+
+
+function appendNote(div) {
     document.getElementById('Notes').appendChild(div);
     NotesChilds = Array.from(NotesContainer.children);
-
 }
 
 
@@ -262,88 +271,53 @@ function createNewTabAndNote() {
         document.getElementById("nameInput").value = "";
         nameAskingWindow.style.display = "none";
 
-        // Creating Tab. 
+        let fakeEvent = { target: { nodeName: "Not_Image" } }
+        let isElementAlreadyExist = false;
 
-        let img = document.createElement('img');
-        img.src = "/NotePad/img/bCross.png";
-        img.className = "crossIcon";
-        img.alt = "x";
+        for (let index = 0; index < localStorage.length; index++) {
 
-        let li = document.createElement('li');
-        li.innerHTML = val;
-        li.appendChild(img);
-
-        tabsBarUl.appendChild(li);
-        tabsBarUlChilds = Array.from(tabsBarUl.children);
-
-        li.addEventListener('click', (e) => {
-
-            changeCurrentTab(e, li, false);
-            changeNotes(e, li, false);
-        });
-
-        li.firstElementChild.addEventListener('mouseover', () => {
-            li.firstElementChild.className = 'crossIconOnHover'
-        });
-
-        li.firstElementChild.addEventListener('mouseout', () => {
-            li.firstElementChild.className = 'crossIcon'
-        });
-
-        li.firstElementChild.addEventListener('touchstart', () => {
-            li.firstElementChild.className = 'crossIconOnTouch'
-        });
-
-        li.firstElementChild.addEventListener('click', (e) => {
-
-            let removedElement = li;
-
-
-            tabsBarUl.removeChild(li);
-            removeNote(removedElement);
-            tabsBarUlChilds = Array.from(tabsBarUl.children);
-
-
-            if (removedElement == currentActiveTab) {
-                if (currentTabIndex < tabsBarUlChilds.length) {
-
-                    changeCurrentTab(null, tabsBarUlChilds[currentTabIndex], true);
-                    changeNotes(e, currentActiveTab, true);
-                }
-                else if (currentTabIndex > tabsBarUlChilds.length - 1) {
-                    changeCurrentTab(null, tabsBarUlChilds[tabsBarUlChilds.length - 1], true);
-                    changeNotes(e, currentActiveTab, true);
-                }
+            if (localStorage.key(index) == val) {
+                isElementAlreadyExist = true;
             }
 
-        });
+        }
 
-        let fakeEvent = { target: { nodeName: "Not_Image" } }
-        changeCurrentTab(fakeEvent, li, false);
+        if (isElementAlreadyExist == false) {
 
-        // Creating new notes tab.
+            // Creating Tab. 
 
-        let div = document.createElement('div');
-        div.id = val;
-        div.innerHTML = val; // ******* WILL REMOVE IT IN FUTURE.
-        div.className = "unActiveNote";
+            let li = createTabSolo(val);
+            appendTab(li);
+            changeCurrentTab(fakeEvent, li, false);
 
-        document.getElementById('Notes').appendChild(div);
-        NotesChilds = Array.from(NotesContainer.children);
+            // Creating new notes.
 
-        changeNotes(fakeEvent, div, false);
+            let div = createNoteSolo(val);
+            appendNote(div);
+            changeNotes(fakeEvent, div, false);
 
+
+            localStorage.setItem(div.id,div.textContent);
+            
+            let option = document.createElement('option');
+            option.value = val;
+            document.getElementById('savedNotes').appendChild(option);
+
+            
+        }
+        else if (isElementAlreadyExist == true) {
+            // Show an error
+            console.log('Notes and Tab already exists!');
+        }
     }
 
 }
-
 
 function OpenNote() { // CHECKPOINT
     document.getElementById('fileListWindow').style.display = 'block';
 
     let filesBtn = document.getElementById('filesButton');
     let val = '';
-
 
     filesBtn.onclick = () => {
 
@@ -354,6 +328,7 @@ function OpenNote() { // CHECKPOINT
         let val = filesInput.value;
 
         if (val == '') {
+            console.log('Input is empty');
             // TASK:  show error in fixed pop up window.
         }
         else if (val != '') {
@@ -369,8 +344,18 @@ function OpenNote() { // CHECKPOINT
             });
 
             if (flag == false) {
-                createTabSolo(val);
-                createNoteSolo(val);
+                let li = createTabSolo(val);
+                appendTab(li);
+
+                let div = createNoteSolo(val);
+                appendNote(div);
+            }
+            else if (flag == true) {
+                
+                // Show an error
+
+                console.log('Tab is already open');
+
             }
 
             filesInput.value = '';
