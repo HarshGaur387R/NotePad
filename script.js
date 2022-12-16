@@ -1,3 +1,17 @@
+window.onload = () => {
+    let length = localStorage.length;
+    for (let index = 0; index < length; index++) {
+        const key = localStorage.key(index);
+
+        let option = document.createElement('option');
+        option.value = key;
+
+        document.getElementById('savedNotes').appendChild(option);
+
+    }
+}
+
+
 let menuBarItems = Array.from(document.getElementById('menuBar').firstElementChild.children);
 
 
@@ -168,6 +182,75 @@ tabsBarUlChilds.forEach((element, index) => {
     });
 });
 
+function createTabSolo(name) {
+
+    let img = document.createElement('img');
+    img.src = "/NotePad/img/bCross.png";
+    img.className = "crossIcon";
+    img.alt = "x";
+
+    let li = document.createElement('li');
+    li.innerHTML = name;
+    li.appendChild(img);
+
+    tabsBarUl.appendChild(li);
+    tabsBarUlChilds = Array.from(tabsBarUl.children);
+
+    li.addEventListener('click', (e) => {
+
+        changeCurrentTab(e, li, false);
+        changeNotes(e, li, false);
+    });
+
+    li.firstElementChild.addEventListener('mouseover', () => {
+        li.firstElementChild.className = 'crossIconOnHover'
+    });
+
+    li.firstElementChild.addEventListener('mouseout', () => {
+        li.firstElementChild.className = 'crossIcon'
+    });
+
+    li.firstElementChild.addEventListener('touchstart', () => {
+        li.firstElementChild.className = 'crossIconOnTouch'
+    });
+
+    li.firstElementChild.addEventListener('click', (e) => {
+
+        let removedElement = li;
+
+
+        tabsBarUl.removeChild(li);
+        removeNote(removedElement);
+        tabsBarUlChilds = Array.from(tabsBarUl.children);
+
+
+        if (removedElement == currentActiveTab) {
+            if (currentTabIndex < tabsBarUlChilds.length) {
+
+                changeCurrentTab(null, tabsBarUlChilds[currentTabIndex], true);
+                changeNotes(e, currentActiveTab, true);
+            }
+            else if (currentTabIndex > tabsBarUlChilds.length - 1) {
+                changeCurrentTab(null, tabsBarUlChilds[tabsBarUlChilds.length - 1], true);
+                changeNotes(e, currentActiveTab, true);
+            }
+        }
+
+    });
+}
+
+function createNoteSolo(id) {
+    let div = document.createElement('div');
+    div.id = id;
+    div.innerHTML = id; // ******* WILL REMOVE IT IN FUTURE.
+    div.className = "unActiveNote";
+
+    document.getElementById('Notes').appendChild(div);
+    NotesChilds = Array.from(NotesContainer.children);
+
+}
+
+
 function createNewTabAndNote() {
 
     let nameAskingWindow = document.getElementById('nameAskingWindow');
@@ -179,7 +262,7 @@ function createNewTabAndNote() {
         document.getElementById("nameInput").value = "";
         nameAskingWindow.style.display = "none";
 
-        // Creating Tab
+        // Creating Tab. 
 
         let img = document.createElement('img');
         img.src = "/NotePad/img/bCross.png";
@@ -256,10 +339,44 @@ function createNewTabAndNote() {
 
 
 function OpenNote() { // CHECKPOINT
-    let length = localStorage.length;
     document.getElementById('fileListWindow').style.display = 'block';
 
+    let filesBtn = document.getElementById('filesButton');
+    let val = '';
 
+
+    filesBtn.onclick = () => {
+
+        let flag = false;
+
+        let filesInput = document.getElementById('filesInput');
+
+        let val = filesInput.value;
+
+        if (val == '') {
+            // TASK:  show error in fixed pop up window.
+        }
+        else if (val != '') {
+            document.getElementById('fileListWindow').style.display = 'none';
+
+            let arr = Array.from(document.getElementById('tabsBarUl').children);
+
+            arr.forEach((e) => {
+                if (e.textContent == val) {
+                    flag = true;
+                    console.log(flag);
+                }
+            });
+
+            if (flag == false) {
+                createTabSolo(val);
+                createNoteSolo(val);
+            }
+
+            filesInput.value = '';
+
+        }
+    };
 
 }
 
