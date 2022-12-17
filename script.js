@@ -11,6 +11,7 @@ window.onload = () => {
     }
 }
 
+let container = document.getElementById('container');
 
 let menuBarItems = Array.from(document.getElementById('menuBar').firstElementChild.children);
 
@@ -51,7 +52,7 @@ function changeNotes(e, element, afterRemoving) {
     try {
 
         if (afterRemoving == false) {
-            if (e.target.nodeName != 'IMG') { 
+            if (e.target.nodeName != 'IMG') {
 
                 if (currentActiveNote == undefined) {
                     currentActiveNote = pair[sID];
@@ -241,8 +242,12 @@ function createNoteSolo(id) {
     let div = document.createElement('div');
     div.id = id;
     div.className = "unActiveNote";
-    
-    // Create textarea tag and append it in div.
+
+    let textarea = document.createElement('textarea');
+    textarea.name = id;
+    textarea.className = 'textareaFull';
+
+    div.appendChild(textarea);
 
     return div;
 
@@ -365,6 +370,8 @@ function OpenNote() { // CHECKPOINT
                     appendTab(li);
 
                     let div = createNoteSolo(val);
+                    div.firstElementChild.value = localStorage.getItem(div.id);
+
                     appendNote(div);
                 }
                 else if (flag == true) {
@@ -376,13 +383,13 @@ function OpenNote() { // CHECKPOINT
                 }
 
             }
-            else if(isElemenetExist == false){
+            else if (isElemenetExist == false) {
 
                 // Show an Error ********
 
                 console.log('Element does not exist');
             }
-                
+
             filesInput.value = '';
         }
     };
@@ -392,7 +399,7 @@ function OpenNote() { // CHECKPOINT
 function saveNote() {
 
     if (currentActiveNote != undefined) {
-        localStorage.setItem(currentActiveNote.id, currentActiveNote.innerHTML);
+        localStorage.setItem(currentActiveNote.id, currentActiveNote.firstElementChild.value);
 
     }
     else if (currentActiveNote == undefined) {
@@ -403,7 +410,69 @@ function saveNote() {
 
 function saveAs() {
 
+    // TASK :::: COMPLETE THIS NONSENSE.
 
+    if (currentActiveTab != undefined) {
+
+        container.style.pointerEvents = 'none';
+
+        document.getElementById('saveAsWindow').style.display = 'block';
+
+        document.getElementById('saveAsWindow').style.pointerEvents = 'all';
+
+        let btn = document.getElementById('saveAsButton');
+
+        btn.onclick = () => {
+
+            let val = document.getElementById('saveAsInput').value;
+
+            if (val == '') {
+                // Show an error
+                console.log('Please enter valid name!');
+            }
+
+            else if (val != '') {
+
+                container.style.pointerEvents = 'all';
+
+
+                document.getElementById('saveAsWindow').style.display = 'none';
+
+
+
+                if (localStorage.getItem(val)) {
+                    // Show an error
+                    console.log('Note With this name already exist');
+                }
+                else if (!localStorage.getItem(val)) {
+                    let li = createTabSolo(val);
+                    let div = createNoteSolo(val);
+
+                    div.firstElementChild.value = currentActiveNote.firstElementChild.value;
+
+                    appendTab(li);
+                    appendNote(div);
+
+
+                    localStorage.setItem(div.id, div.firstElementChild.value);
+
+
+                    let option = document.createElement('option');
+
+                    option.value = val;
+
+                    document.getElementById('savedNotes').appendChild(option);
+                }
+
+            }
+
+            document.getElementById('saveAsInput').value = '';
+        }
+
+    }
+    else if (currentActiveTab == undefined) {
+        console.log('Select the element first');
+    }
 
 }
 
@@ -415,8 +484,9 @@ function stckey() { // Stickey open the tab and note in new window.
 
 }
 
+// Create pointer event on 0 and 1. +++++++++++++++++
 
 menuBarItems[0].addEventListener('click', createNewTabAndNote);
 menuBarItems[1].addEventListener('click', OpenNote);
-menuBarItems[2].addEventListener('click', saveNote);
-menuBarItems[3].addEventListener('click',saveAs);
+menuBarItems[2].addEventListener('click', saveNote); 
+menuBarItems[3].addEventListener('click', saveAs);

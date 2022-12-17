@@ -4,6 +4,10 @@
 }
 
 
+#container{
+    pointer-events: all;
+}
+
 #menuBar li {
     background-color: #111111;
     font-size: 18px;
@@ -88,13 +92,13 @@
 }
 
 
-.HG-label-box{
+.HG-label-box {
     color: #D6CD00;
     font-size: 30px;
     font-weight: 700;
 }
 
-.HG-input-box{
+.HG-input-box {
     text-align: center;
     background-color: transparent;
     border: 2px solid #D6CD00;
@@ -102,13 +106,13 @@
     font-size: 18px;
 }
 
-.HG-input-box:focus{
+.HG-input-box:focus {
     -webkit-outline: 1px solid white;
     -moz-outline: 1px solid white;
     outline: 1px solid white;
 }
 
-.HG-button{
+.HG-button {
     font-family: 'inter';
     padding: 10px;
     font-size: 18px;
@@ -117,13 +121,13 @@
     color: black;
 }
 
-.HG-button:active{
+.HG-button:active {
     background-color: transparent;
     border: 2px solid #D6CD00;
     color: #D6CD00;
 }
 
-#fileListWindow{
+#fileListWindow {
     display: none;
     font-family: 'inter';
     background-color: #111111;
@@ -145,7 +149,7 @@
     padding-right: 20px;
 }
 
-.textareaFull{
+.textareaFull {
     width: calc(99% - 10px);
     height: calc(100% - 20px);
     border: none;
@@ -154,10 +158,33 @@
     padding: 10px;
 }
 
-.textareaFull:focus{
+.textareaFull:focus {
     -webkit-outline: none;
     -moz-outline: none;
     outline: none;
+}
+
+
+#saveAsWindow {
+    display: none;
+    font-family: 'inter';
+    background-color: #111111;
+    width: 30vw;
+    min-width: 300px;
+    height: 200px;
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-top: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 
