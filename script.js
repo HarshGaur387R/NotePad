@@ -50,14 +50,14 @@ function changeNotes(e, element, afterRemoving) {
 
     try {
 
-
         if (afterRemoving == false) {
-            if (e.target.nodeName != 'IMG') {    // Find other logic for this shit.  .
+            if (e.target.nodeName != 'IMG') { 
+
                 if (currentActiveNote == undefined) {
                     currentActiveNote = pair[sID];
                     currentActiveNote.className = 'activeNote';
                 }
-                else if(currentActiveNote != undefined){
+                else if (currentActiveNote != undefined) {
                     currentActiveNote.className = 'unActiveNote';
                     currentActiveNote = pair[sID];
                     currentActiveNote.className = 'activeNote';
@@ -103,7 +103,7 @@ function changeCurrentTab(e, element, afterRemoving) {
 
 
                 }
-                else if(currentActiveTab != undefined){
+                else if (currentActiveTab != undefined) {
 
                     currentActiveTab.style.cssText = 'background-color:#171717;';
 
@@ -240,8 +240,9 @@ function createTabSolo(name) {
 function createNoteSolo(id) {
     let div = document.createElement('div');
     div.id = id;
-    div.innerHTML = id; // ******* WILL REMOVE IT IN FUTURE.
     div.className = "unActiveNote";
+    
+    // Create textarea tag and append it in div.
 
     return div;
 
@@ -294,19 +295,21 @@ function createNewTabAndNote() {
 
             let div = createNoteSolo(val);
             appendNote(div);
-            changeNotes(fakeEvent, div, false);
+            changeNotes(fakeEvent, li, false);
 
 
-            localStorage.setItem(div.id,div.textContent);
-            
+            localStorage.setItem(div.id, div.textContent);
+
             let option = document.createElement('option');
             option.value = val;
             document.getElementById('savedNotes').appendChild(option);
 
-            
+
         }
         else if (isElementAlreadyExist == true) {
-            // Show an error
+
+            // Show an error *****************
+
             console.log('Notes and Tab already exists!');
         }
     }
@@ -329,37 +332,58 @@ function OpenNote() { // CHECKPOINT
 
         if (val == '') {
             console.log('Input is empty');
-            // TASK:  show error in fixed pop up window.
+
+            // Show an error ******************
+
         }
         else if (val != '') {
             document.getElementById('fileListWindow').style.display = 'none';
 
             let arr = Array.from(document.getElementById('tabsBarUl').children);
 
-            arr.forEach((e) => {
-                if (e.textContent == val) {
-                    flag = true;
-                    console.log(flag);
+
+            let isElemenetExist = false;
+
+            for (let index = 0; index < localStorage.length; index++) {
+
+                if (localStorage.key(index) == val) {
+                    isElemenetExist = true;
                 }
-            });
-
-            if (flag == false) {
-                let li = createTabSolo(val);
-                appendTab(li);
-
-                let div = createNoteSolo(val);
-                appendNote(div);
             }
-            else if (flag == true) {
+
+            if (isElemenetExist == true) {
+
+                arr.forEach((e) => {
+                    if (e.textContent == val) {
+                        flag = true;
+                        console.log(flag);
+                    }
+                });
+
+                if (flag == false) {
+                    let li = createTabSolo(val);
+                    appendTab(li);
+
+                    let div = createNoteSolo(val);
+                    appendNote(div);
+                }
+                else if (flag == true) {
+
+                    // Show an error ********
+
+                    console.log('Tab is already open');
+
+                }
+
+            }
+            else if(isElemenetExist == false){
+
+                // Show an Error ********
+
+                console.log('Element does not exist');
+            }
                 
-                // Show an error
-
-                console.log('Tab is already open');
-
-            }
-
             filesInput.value = '';
-
         }
     };
 
@@ -371,9 +395,15 @@ function saveNote() {
         localStorage.setItem(currentActiveNote.id, currentActiveNote.innerHTML);
 
     }
+    else if (currentActiveNote == undefined) {
+        // Show an error message *********
+        console.log('Select the Note first');
+    }
 }
 
-function saveAs(activeNote, id) {
+function saveAs() {
+
+
 
 }
 
@@ -389,3 +419,4 @@ function stckey() { // Stickey open the tab and note in new window.
 menuBarItems[0].addEventListener('click', createNewTabAndNote);
 menuBarItems[1].addEventListener('click', OpenNote);
 menuBarItems[2].addEventListener('click', saveNote);
+menuBarItems[3].addEventListener('click',saveAs);
