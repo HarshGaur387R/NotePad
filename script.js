@@ -272,57 +272,76 @@ function createNewTabAndNote() {
     nameAskingWindow.style.display = "block";
     let nameButton = document.getElementById('nameButton');
 
+    /* Making others elements of container unclickable except the popup window. */
+    container.style.pointerEvents = 'none'; 
+
+    document.getElementById('nameAskingWindow').style.pointerEvents = 'all';
+
+
     nameButton.onclick = () => {
         let val = document.getElementById('nameInput').value;
         document.getElementById("nameInput").value = "";
-        nameAskingWindow.style.display = "none";
 
-        let fakeEvent = { target: { nodeName: "Not_Image" } }
-        let isElementAlreadyExist = false;
+        if (val == '') {
+            // Show an error.
+            console.log('Name is empty!');
+        }
+        else if (val != '') {
 
-        for (let index = 0; index < localStorage.length; index++) {
+            nameAskingWindow.style.display = "none";
+            container.style.pointerEvents = 'all';
 
-            if (localStorage.key(index) == val) {
-                isElementAlreadyExist = true;
+            let fakeEvent = { target: { nodeName: "Not_Image" } }
+            let isElementAlreadyExist = false;
+
+            for (let index = 0; index < localStorage.length; index++) {
+
+                if (localStorage.key(index) == val) {
+                    isElementAlreadyExist = true;
+                }
+
             }
 
-        }
+            if (isElementAlreadyExist == false) {
 
-        if (isElementAlreadyExist == false) {
+                // Creating Tab. 
 
-            // Creating Tab. 
+                let li = createTabSolo(val);
+                appendTab(li);
+                changeCurrentTab(fakeEvent, li, false);
 
-            let li = createTabSolo(val);
-            appendTab(li);
-            changeCurrentTab(fakeEvent, li, false);
+                // Creating new notes.
 
-            // Creating new notes.
-
-            let div = createNoteSolo(val);
-            appendNote(div);
-            changeNotes(fakeEvent, li, false);
+                let div = createNoteSolo(val);
+                appendNote(div);
+                changeNotes(fakeEvent, li, false);
 
 
-            localStorage.setItem(div.id, div.textContent);
+                localStorage.setItem(div.id, div.textContent);
 
-            let option = document.createElement('option');
-            option.value = val;
-            document.getElementById('savedNotes').appendChild(option);
+                let option = document.createElement('option');
+                option.value = val;
+                document.getElementById('savedNotes').appendChild(option);
 
 
-        }
-        else if (isElementAlreadyExist == true) {
+            }
+            else if (isElementAlreadyExist == true) {
 
-            // Show an error *****************
+                // Show an error *****************
 
-            console.log('Notes and Tab already exists!');
+                console.log('Notes and Tab already exists!');
+            }
         }
     }
 
 }
 
-function OpenNote() { // CHECKPOINT
+function OpenNote() { 
     document.getElementById('fileListWindow').style.display = 'block';
+
+    container.style.pointerEvents = 'none';
+
+    document.getElementById('fileListWindow').style.pointerEvents = 'all';
 
     let filesBtn = document.getElementById('filesButton');
     let val = '';
@@ -343,6 +362,8 @@ function OpenNote() { // CHECKPOINT
         }
         else if (val != '') {
             document.getElementById('fileListWindow').style.display = 'none';
+
+            container.style.pointerEvents = 'all';
 
             let arr = Array.from(document.getElementById('tabsBarUl').children);
 
@@ -396,7 +417,8 @@ function OpenNote() { // CHECKPOINT
 
 }
 
-function saveNote() {
+function saveNote() // Saves current note with different name.
+{
 
     if (currentActiveNote != undefined) {
         localStorage.setItem(currentActiveNote.id, currentActiveNote.firstElementChild.value);
@@ -410,14 +432,13 @@ function saveNote() {
 
 function saveAs() {
 
-    // TASK :::: COMPLETE THIS NONSENSE.
 
     if (currentActiveTab != undefined) {
 
-        container.style.pointerEvents = 'none';
 
         document.getElementById('saveAsWindow').style.display = 'block';
 
+        container.style.pointerEvents = 'none';
         document.getElementById('saveAsWindow').style.pointerEvents = 'all';
 
         let btn = document.getElementById('saveAsButton');
@@ -427,7 +448,7 @@ function saveAs() {
             let val = document.getElementById('saveAsInput').value;
 
             if (val == '') {
-                // Show an error
+                // Show an error ***********
                 console.log('Please enter valid name!');
             }
 
@@ -441,7 +462,7 @@ function saveAs() {
 
 
                 if (localStorage.getItem(val)) {
-                    // Show an error
+                    // Show an error *************
                     console.log('Note With this name already exist');
                 }
                 else if (!localStorage.getItem(val)) {
@@ -471,22 +492,44 @@ function saveAs() {
 
     }
     else if (currentActiveTab == undefined) {
+        // Show an error ************.
         console.log('Select the element first');
     }
 
 }
 
 function deleteNode() { // Delete's active note and tab.
+    if (currentActiveTab == undefined) {
+        
+        console.log('Select the node first.');
+        //  Show an error message.
+    }
 
+    else if (currentActiveTab != undefined) {
+        
+        let element = currentActiveTab;
+
+        tabsBarUl.removeChild(element);
+        tabsBarUlChilds = Array.from(tabsBarUl.children);
+
+        removeNote(element);
+
+        localStorage.removeItem(element.textContent);
+        
+    }
 }
 
-function stckey() { // Stickey open the tab and note in new window.
+function sticky() { // Sticky open the tab and note in new window.
 
+    var win = window.open('', '_blank','height=500,width=500,left=100,top=100');
+    win.focus();
+
+    // TASK: Complete this nonsense.
 }
-
-// Create pointer event on 0 and 1. +++++++++++++++++
 
 menuBarItems[0].addEventListener('click', createNewTabAndNote);
 menuBarItems[1].addEventListener('click', OpenNote);
-menuBarItems[2].addEventListener('click', saveNote); 
+menuBarItems[2].addEventListener('click', saveNote);
 menuBarItems[3].addEventListener('click', saveAs);
+menuBarItems[4].addEventListener('click',deleteNode);
+menuBarItems[5].addEventListener('click',sticky);
