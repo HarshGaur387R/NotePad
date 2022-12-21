@@ -273,7 +273,7 @@ function createNewTabAndNote() {
     let nameButton = document.getElementById('nameButton');
 
     /* Making others elements of container unclickable except the popup window. */
-    container.style.pointerEvents = 'none'; 
+    container.style.pointerEvents = 'none';
 
     document.getElementById('nameAskingWindow').style.pointerEvents = 'all';
 
@@ -283,8 +283,12 @@ function createNewTabAndNote() {
         document.getElementById("nameInput").value = "";
 
         if (val == '') {
-            // Show an error.
-            console.log('Name is empty!');
+            // ERROR
+            document.querySelectorAll('.errLabel').forEach(e=>{
+                e.innerHTML = 'Input is empty!';
+            });
+
+
         }
         else if (val != '') {
 
@@ -327,16 +331,18 @@ function createNewTabAndNote() {
             }
             else if (isElementAlreadyExist == true) {
 
-                // Show an error *****************
+                // ERROR
+                document.getElementById('ErrorWindow').style.display = 'block';
+                document.getElementById('errorMessage').innerHTML = 'Note Already Exist!';
 
-                console.log('Notes and Tab already exists!');
+
             }
         }
     }
 
 }
 
-function OpenNote() { 
+function OpenNote() {
     document.getElementById('fileListWindow').style.display = 'block';
 
     container.style.pointerEvents = 'none';
@@ -355,9 +361,12 @@ function OpenNote() {
         let val = filesInput.value;
 
         if (val == '') {
-            console.log('Input is empty');
 
-            // Show an error ******************
+            // ERROR
+            document.querySelectorAll('.errLabel').forEach(e=>{
+                e.innerHTML = 'Input is empty!';
+            });
+
 
         }
         else if (val != '') {
@@ -397,18 +406,18 @@ function OpenNote() {
                 }
                 else if (flag == true) {
 
-                    // Show an error ********
-
-                    console.log('Tab is already open');
+                    // ERROR
+                    document.getElementById('ErrorWindow').style.display = 'block';
+                    document.getElementById('errorMessage').innerHTML = 'Note is already open';
 
                 }
 
             }
             else if (isElemenetExist == false) {
 
-                // Show an Error ********
-
-                console.log('Element does not exist');
+                // ERROR
+                document.getElementById('ErrorWindow').style.display = 'block';
+                document.getElementById('errorMessage').innerHTML = 'Note does not exist';
             }
 
             filesInput.value = '';
@@ -425,8 +434,12 @@ function saveNote() // Saves current note with different name.
 
     }
     else if (currentActiveNote == undefined) {
-        // Show an error message *********
-        console.log('Select the Note first');
+
+        // ERROR
+
+        document.getElementById('ErrorWindow').style.display = 'block';
+        document.getElementById('errorMessage').innerHTML = 'Select Note first';
+
     }
 }
 
@@ -448,8 +461,13 @@ function saveAs() {
             let val = document.getElementById('saveAsInput').value;
 
             if (val == '') {
-                // Show an error ***********
-                console.log('Please enter valid name!');
+
+                // ERROR
+                document.querySelectorAll('.errLabel').forEach(e=>{
+                    e.innerHTML = 'Input is empty!';
+                });
+    
+
             }
 
             else if (val != '') {
@@ -462,8 +480,12 @@ function saveAs() {
 
 
                 if (localStorage.getItem(val)) {
-                    // Show an error *************
-                    console.log('Note With this name already exist');
+
+                    // ERROR
+                    document.getElementById('ErrorWindow').style.display = 'block';
+                    document.getElementById('errorMessage').innerHTML = 'Note already exist';
+        
+
                 }
                 else if (!localStorage.getItem(val)) {
                     let li = createTabSolo(val);
@@ -492,21 +514,34 @@ function saveAs() {
 
     }
     else if (currentActiveTab == undefined) {
-        // Show an error ************.
-        console.log('Select the element first');
+
+        // ERROR
+
+        document.getElementById('ErrorWindow').style.display = 'block';
+        document.getElementById('errorMessage').innerHTML = 'Select Note first';
     }
 
 }
 
 function deleteNode() { // Delete's active note and tab.
     if (currentActiveTab == undefined) {
-        
-        console.log('Select the node first.');
-        //  Show an error message.
+
+        // ERROR
+
+        document.getElementById('ErrorWindow').style.display = 'block';
+        document.getElementById('errorMessage').innerHTML = 'Select Note first';
     }
 
     else if (currentActiveTab != undefined) {
-        
+
+        if (tabsBarUl.children.length == 0) { // CHECKPOINT
+            console.log('fck');
+        }
+        else{
+            console.log('yes');
+            console.log(tabsBarUl.children);
+        }
+
         let element = currentActiveTab;
 
         tabsBarUl.removeChild(element);
@@ -515,21 +550,106 @@ function deleteNode() { // Delete's active note and tab.
         removeNote(element);
 
         localStorage.removeItem(element.textContent);
-        
+
     }
 }
 
+var windows = [];
+
 function sticky() { // Sticky open the tab and note in new window.
 
-    var win = window.open('', '_blank','height=500,width=500,left=100,top=100');
-    win.focus();
+    document.getElementById('stickyNoteWindow').style.display = 'block';
 
-    // TASK: Complete this nonsense.
+    let btn = document.getElementById('stickyBtn');
+
+    container.style.pointerEvents = 'none';
+    document.getElementById('stickyNoteWindow').style.pointerEvents = 'all';
+
+    btn.addEventListener('click', () => {
+
+        let value = document.getElementById('stickyInput').value;
+
+
+
+        if (value == '') {
+
+            // ERROR
+            document.querySelectorAll('.errLabel').forEach(e=>{
+                e.innerHTML = 'Input is empty!';
+            });
+
+
+        }
+
+        else if (value != '') {
+
+            container.style.pointerEvents = 'all';
+
+            document.getElementById('stickyNoteWindow').style.display = 'none';
+
+            if (localStorage.getItem(value)) {
+
+                // Show Error Message.
+                document.querySelectorAll('.errLabel').forEach(e=>{
+                    e.innerHTML = 'Note already exist!';
+                });
+    
+            }
+            else if (!localStorage.getItem(value)) {
+
+
+                let url = 'http://192.168.43.202:5500/NotePad/stickyNote.html';
+
+
+                var win = window.open(url, `Popup.aspx?ReturnID=${value}&AllowSearch=False`, '_blank', 'height=500,width=500,left=100,top=100');
+
+                windows.push(win);
+
+                win.onload = () => {
+                    win.resizeTo(500, 500);
+                    win.moveTo(100, 100);
+
+                    win.document.title = value;
+                    win.document.getElementById('sContainer').firstElementChild.firstElementChild.innerHTML = `ONLINE NOTEPAD (${value})`;
+
+                    win.addEventListener('unload', () => {
+
+                        windows.pop(win);
+                    });
+                }
+
+            }
+        }
+    });
+
 }
+
+let fixingCross = document.querySelectorAll('.fixingCross');
+
+fixingCross.forEach(e => {
+    e.addEventListener('click', () => {
+        e.parentElement.style.display = 'none';
+        container.style.pointerEvents = 'all';
+
+        document.querySelectorAll('.errLabel').forEach(e=>{
+            e.innerHTML = '';
+        });
+
+        document.getElementById('errorMessage').innerHTML = '';
+
+    });
+});
+
 
 menuBarItems[0].addEventListener('click', createNewTabAndNote);
 menuBarItems[1].addEventListener('click', OpenNote);
 menuBarItems[2].addEventListener('click', saveNote);
 menuBarItems[3].addEventListener('click', saveAs);
-menuBarItems[4].addEventListener('click',deleteNode);
-menuBarItems[5].addEventListener('click',sticky);
+menuBarItems[4].addEventListener('click', deleteNode);
+menuBarItems[5].addEventListener('click', sticky);
+
+window.addEventListener('unload', () => {
+    windows.forEach((w) => {
+        w.close();
+    });
+});

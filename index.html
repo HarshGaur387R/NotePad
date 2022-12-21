@@ -39,9 +39,14 @@
             
         </div>
 
+        <!-- Pop Up For Asking Name Of New NOTE. -->
+
         <div id="nameAskingWindow">
+            <img class="fixingCross" src="img/wCross.png" alt="X">
             <label class="HG-label-box" for="nameInput">Enter Note Name</label>
             <br>
+            <br>
+            <label class="errLabel"></label>
             <br>
             <input class="HG-input-box" type="text" name="nameInput" id="nameInput">
             <br>
@@ -49,9 +54,14 @@
             <button class="HG-button" id="nameButton">Create</button>
         </div>
 
+        <!-- Pop Up For NOTE User Wants To Open. -->
+
         <div id="fileListWindow">
+            <img class="fixingCross" src="img/wCross.png" alt="X">
             <label class="HG-label-box" for="filesInput">Search Note</label>
             <br>
+            <br>
+            <label class="errLabel"></label>
             <br>
             <input class="HG-input-box" list="savedNotes" id="filesInput" name="filesInput">
 
@@ -64,14 +74,42 @@
             <button class="HG-button" id="filesButton">Open</button>
         </div>
 
+        <!-- Pop Up For Save As Window -->
+
         <div id="saveAsWindow">
+            <img class="fixingCross" src="img/wCross.png" alt="X">
             <label class="HG-label-box" for="saveAsInput">Enter File Name</label>
             <br>
+            <br>
+            <label class="errLabel"></label>
             <br>
             <input class="HG-input-box" type="text" name="saveAsInput" id="saveAsInput">
             <br>
             <br>
             <button class="HG-button" id="saveAsButton">Save</button>
+        </div>
+
+        <!-- Pop Up For Sticky Note Button -->
+
+        <div id="stickyNoteWindow">
+            <img class="fixingCross" src="img/wCross.png" alt="X">
+            <label class="HG-label-box" for="stickyInput">Enter Note Name</label>
+            <br>
+            <br>
+            <label class="errLabel"></label>
+            <br>
+            <input class="HG-input-box" type="text" name="stickyInput" id="stickyInput">
+            <br>
+            <br>
+            <button class="HG-button" id="stickyBtn">Create</button>
+        </div>
+
+        <div id="ErrorWindow">
+            <img class="fixingCross" src="img/wCross.png" alt="X">
+            <br>
+            <br>
+            <div id="errorMessage">
+            </div>
         </div>
 
     </div>

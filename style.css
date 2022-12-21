@@ -91,6 +91,12 @@
     padding-right: 20px;
 }
 
+.fixingCross{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
 
 .HG-label-box {
     color: #D6CD00;
@@ -187,6 +193,68 @@
     padding-right: 20px;
 }
 
+#stickyNoteWindow{
+    display: none;
+    font-family: 'inter';
+    background-color: #111111;
+    width: 30vw;
+    min-width: 300px;
+    height: 200px;
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-top: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.errLabel{
+    
+    color: red;
+}
+
+#ErrorWindow{
+    display: none;
+    background-color: #111111;
+    color: #D6CD00;
+    font-family: 'inter';
+    font-size: 15px;
+    width: 300px;
+    min-width: 200px;
+    height: 100px;
+    position: fixed;
+    z-index: 3;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 15px;
+}
+
+#ErrorWindow div{
+    overflow-x: auto;
+    width: 280px;
+    min-width: 180px;
+    height: 20px;
+    padding: 10px;
+    background-color: black;
+    white-space: nowrap;
+    
+}
 
 .activeNote {
     display: block;

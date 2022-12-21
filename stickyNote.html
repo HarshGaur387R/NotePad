@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="util.css">
+    <style>
+
+        *{
+            margin:0%;
+            padding: 0%;
+        }
+
+        .sTextareaFull {
+            width: calc(99% - 10px);
+            height: calc(100% - 20px);
+            border: none;
+            background-color: #282828;
+            color: #D6CD00;
+            padding: 10px;
+        }
+
+        .sTextareaFull:focus {
+            -webkit-outline: none;
+            -moz-outline: none;
+            outline: none;
+        }
+
+        #sNotes {
+            width: 100vw;
+            height: 100vh;
+            background-color: #282828;
+        }
+
+        #sMenuBar li {
+            background-color: #111111;
+            font-size: 18px;
+            padding: 15px;
+            margin-left: 10px;
+            user-select: none;
+        }
+
+        #sMenuBar li:active {
+            background-color: #D6CD00;
+            color: black;
+        }
+
+
+    </style>
+</head>
+
+<body>
+
+    <div id="sContainer" class="ta-center">
+
+        <header class="bgColor-171717 color-D6CD00 font-inter" style="font-size: 24px; padding: 5px;">
+            <h2>ONLINE NOTEPAD</h2>
+        </header>
+
+        <div id="sMenuBar">
+            <ul class="lst-none flex bgColor-0E0E0E color-white font-inter f-flow-wrap">
+                <li>Save</li>
+                <li id="load">Load</li>
+                <li id="close">Close</li>
+            </ul>
+        </div>
+
+        <div id="sNotes">
+            <textarea name="sTextArea" class="sTextareaFull" placeholder="Enter text..."></textarea>
+        </div>
+
+    </div>
+
+
+    <script>
+
+        let saveBtn = document.getElementById('sMenuBar').firstElementChild.firstElementChild;
+
+        let closeBtn = document.getElementById('close');
+        
+        let loadBtn = document.getElementById('load');
+
+        let textarea = document.getElementById('sNotes').firstElementChild;
+
+
+        /* Save button for saving notes. */
+
+        function saveStickyNote() {
+            
+            // Key :
+            let windowName = document.title;
+            
+            // Value :
+            let textareaValue = textarea.value;
+
+            // Storing in local storage.
+            localStorage.setItem(windowName,textareaValue);
+
+        }
+
+
+        /* Load button for loading saved notes. */
+
+        function loadStickyNote() {
+
+            if (localStorage.getItem(document.title)){
+
+                // ------ Checking if item exist or not ------
+
+                textarea.value = localStorage.getItem(document.title);
+
+            }
+            else if (!localStorage.getItem(document.title)) {
+
+                // ==> Show Error Message.
+                console.log('Save First!');
+            }
+        }
+
+
+        /* Close button for closing the window. */
+
+        function closeStickyNote() {
+
+            window.close();
+        }
+
+
+        saveBtn.addEventListener('click',saveStickyNote);
+        loadBtn.addEventListener('click',loadStickyNote);
+        closeBtn.addEventListener('click',closeStickyNote);
+
+
+    </script>
+</body>
+
+</html>
