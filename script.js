@@ -284,13 +284,17 @@ function createNewTabAndNote() {
 
         if (val == '') {
             // ERROR
-            document.querySelectorAll('.errLabel').forEach(e=>{
+            document.querySelectorAll('.errLabel').forEach(e => {
                 e.innerHTML = 'Input is empty!';
             });
 
-
         }
+
         else if (val != '') {
+
+            document.querySelectorAll('.errLabel').forEach(e => {
+                e.innerHTML = '';
+            });
 
             nameAskingWindow.style.display = "none";
             container.style.pointerEvents = 'all';
@@ -363,13 +367,18 @@ function OpenNote() {
         if (val == '') {
 
             // ERROR
-            document.querySelectorAll('.errLabel').forEach(e=>{
+            document.querySelectorAll('.errLabel').forEach(e => {
                 e.innerHTML = 'Input is empty!';
             });
 
 
         }
         else if (val != '') {
+
+            document.querySelectorAll('.errLabel').forEach(e => {
+                e.innerHTML = '';
+            });
+
             document.getElementById('fileListWindow').style.display = 'none';
 
             container.style.pointerEvents = 'all';
@@ -463,10 +472,10 @@ function saveAs() {
             if (val == '') {
 
                 // ERROR
-                document.querySelectorAll('.errLabel').forEach(e=>{
+                document.querySelectorAll('.errLabel').forEach(e => {
                     e.innerHTML = 'Input is empty!';
                 });
-    
+
 
             }
 
@@ -478,13 +487,17 @@ function saveAs() {
                 document.getElementById('saveAsWindow').style.display = 'none';
 
 
+                document.querySelectorAll('.errLabel').forEach(e => {
+                    e.innerHTML = '';
+                });
+
 
                 if (localStorage.getItem(val)) {
 
                     // ERROR
                     document.getElementById('ErrorWindow').style.display = 'block';
                     document.getElementById('errorMessage').innerHTML = 'Note already exist';
-        
+
 
                 }
                 else if (!localStorage.getItem(val)) {
@@ -534,22 +547,23 @@ function deleteNode() { // Delete's active note and tab.
 
     else if (currentActiveTab != undefined) {
 
-        if (tabsBarUl.children.length == 0) { // CHECKPOINT
-            console.log('fck');
+        if (tabsBarUl.children.length == 0) {
+
+            document.getElementById('ErrorWindow').style.display = 'block';
+            document.getElementById('errorMessage').innerHTML = 'Select Note first';
         }
-        else{
-            console.log('yes');
-            console.log(tabsBarUl.children);
+        else if (tabsBarUl.children.length > 0) {
+
+
+            let element = currentActiveTab;
+
+            tabsBarUl.removeChild(element);
+            tabsBarUlChilds = Array.from(tabsBarUl.children);
+
+            removeNote(element);
+
+            localStorage.removeItem(element.textContent);
         }
-
-        let element = currentActiveTab;
-
-        tabsBarUl.removeChild(element);
-        tabsBarUlChilds = Array.from(tabsBarUl.children);
-
-        removeNote(element);
-
-        localStorage.removeItem(element.textContent);
 
     }
 }
@@ -569,15 +583,12 @@ function sticky() { // Sticky open the tab and note in new window.
 
         let value = document.getElementById('stickyInput').value;
 
-
-
         if (value == '') {
 
             // ERROR
-            document.querySelectorAll('.errLabel').forEach(e=>{
+            document.querySelectorAll('.errLabel').forEach(e => {
                 e.innerHTML = 'Input is empty!';
             });
-
 
         }
 
@@ -585,15 +596,19 @@ function sticky() { // Sticky open the tab and note in new window.
 
             container.style.pointerEvents = 'all';
 
+            document.querySelectorAll('.errLabel').forEach(e => {
+                e.innerHTML = '';
+            });
+
             document.getElementById('stickyNoteWindow').style.display = 'none';
 
             if (localStorage.getItem(value)) {
 
                 // Show Error Message.
-                document.querySelectorAll('.errLabel').forEach(e=>{
+                document.querySelectorAll('.errLabel').forEach(e => {
                     e.innerHTML = 'Note already exist!';
                 });
-    
+
             }
             else if (!localStorage.getItem(value)) {
 
@@ -631,7 +646,7 @@ fixingCross.forEach(e => {
         e.parentElement.style.display = 'none';
         container.style.pointerEvents = 'all';
 
-        document.querySelectorAll('.errLabel').forEach(e=>{
+        document.querySelectorAll('.errLabel').forEach(e => {
             e.innerHTML = '';
         });
 

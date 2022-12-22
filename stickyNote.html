@@ -8,9 +8,8 @@
     <title>Document</title>
     <link rel="stylesheet" href="util.css">
     <style>
-
-        *{
-            margin:0%;
+        * {
+            margin: 0%;
             padding: 0%;
         }
 
@@ -48,7 +47,47 @@
             color: black;
         }
 
+        .fixingCross {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
 
+        #ErrorWindow {
+            display: none;
+            background-color: #111111;
+            color: #D6CD00;
+            font-family: 'inter';
+            font-size: 15px;
+            width: 300px;
+            min-width: 200px;
+            height: 100px;
+            position: fixed;
+            z-index: 3;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: auto;
+            margin-bottom: auto;
+            padding-top: 5px;
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-bottom: 15px;
+        }
+
+        #ErrorWindow div {
+            overflow-x: auto;
+            width: 280px;
+            min-width: 180px;
+            height: 20px;
+            padding: 10px;
+            background-color: black;
+            white-space: nowrap;
+
+        }
     </style>
 </head>
 
@@ -72,6 +111,13 @@
             <textarea name="sTextArea" class="sTextareaFull" placeholder="Enter text..."></textarea>
         </div>
 
+        <div id="ErrorWindow">
+            <img class="fixingCross" src="img/wCross.png" alt="X">
+            <br>
+            <br>
+            <div id="errorMessage">
+            </div>
+        </div>
     </div>
 
 
@@ -80,7 +126,7 @@
         let saveBtn = document.getElementById('sMenuBar').firstElementChild.firstElementChild;
 
         let closeBtn = document.getElementById('close');
-        
+
         let loadBtn = document.getElementById('load');
 
         let textarea = document.getElementById('sNotes').firstElementChild;
@@ -89,15 +135,15 @@
         /* Save button for saving notes. */
 
         function saveStickyNote() {
-            
+
             // Key :
             let windowName = document.title;
-            
+
             // Value :
             let textareaValue = textarea.value;
 
             // Storing in local storage.
-            localStorage.setItem(windowName,textareaValue);
+            localStorage.setItem(windowName, textareaValue);
 
         }
 
@@ -106,7 +152,7 @@
 
         function loadStickyNote() {
 
-            if (localStorage.getItem(document.title)){
+            if (localStorage.getItem(document.title)) {
 
                 // ------ Checking if item exist or not ------
 
@@ -116,7 +162,8 @@
             else if (!localStorage.getItem(document.title)) {
 
                 // ==> Show Error Message.
-                console.log('Save First!');
+                document.getElementById('ErrorWindow').style.display = 'block';
+                document.getElementById('errorMessage').innerHTML = 'Save First!';
             }
         }
 
@@ -129,9 +176,25 @@
         }
 
 
-        saveBtn.addEventListener('click',saveStickyNote);
-        loadBtn.addEventListener('click',loadStickyNote);
-        closeBtn.addEventListener('click',closeStickyNote);
+        let fixingCross = document.querySelectorAll('.fixingCross');
+
+        fixingCross.forEach(e => {
+            e.addEventListener('click', () => {
+                e.parentElement.style.display = 'none';
+                container.style.pointerEvents = 'all';
+
+                document.querySelectorAll('.errLabel').forEach(e => {
+                    e.innerHTML = '';
+                });
+
+                document.getElementById('errorMessage').innerHTML = '';
+
+            });
+        });
+
+        saveBtn.addEventListener('click', saveStickyNote);
+        loadBtn.addEventListener('click', loadStickyNote);
+        closeBtn.addEventListener('click', closeStickyNote);
 
 
     </script>
